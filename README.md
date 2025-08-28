@@ -1,27 +1,31 @@
-# FinText: Equity Research Automation with FinGPT and SEC API
-FinText automates equity research by combining the power of FinGPT, a large language model (LLM) fine-tuned for financial text, and the US Securities and Exchange Commission's (SEC) Edgar API. This script leverages FinGPT's capabilities to analyze financial documents retrieved from the SEC Edgar database, extracting key insights and generating reports on a company's financial health, performance, and future prospects.
+# FinGPT
 
-# Key Functionalities
-- Automated Data Retrieval: Fetches relevant company filings (e.g., 10-K, 10-Q) from the SEC Edgar API.
-- FinGPT Analysis: Utilizes FinGPT to process and analyze the retrieved financial documents.
-- Insights Generation: Generates reports summarizing the company's:
-- Financial Performance: Revenue, profitability, cost structure, and growth trends.
-- Financial Stability: Liquidity, solvency, and capital structure analysis.
-- Investment Potential: Potential risks and opportunities identified from financial data.
+## I. How to setup for local run??
 
-## Benefits
-- Improved Efficiency: Automates time-consuming aspects of equity research.
-- Enhanced Accuracy: Leverages FinGPT's capabilities for in-depth financial text analysis.
-- Data-Driven Insights: Provides objective and insightful reports based on financial data.
+1. Clone this `fin-gpt` repo to your local.
 
-## Target Users
-- Equity Researchers
-- Financial Analysts
-- Investors
-- Getting Started
-- This repository includes:
+2. Make sure your python enviroment has installed `poetry` and `python 3.11.4`.
 
-## The script code
-- Instructions on setting up SEC Edgar API access
-- Details on using the FinGPT model
-- Feel free to contribute or suggest improvements!
+3. From your terminal
+
+   1. Run `cd /path/to/your/repo/fin-gpt/fingpt`.
+
+   2. Run `poetry install` to set up all the necessary libraries.
+
+   3. `./cmd.sh run` then see the deployment on `http://localhost:8000/docs`.
+
+
+## II. Pre-commit set up
+Use `pre-commit` to manage hooks for checking your code before commit to GitHub.
+
+1. Set up pre-commit
+
+```
+    pip install pre-commit
+```
+```
+    pre-commit install
+```
+2. Do commit as normal.
+
+If your commit code not clean or contains any secret keys, it will fix it for you or stop you to re-check!

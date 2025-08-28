@@ -1,0 +1,104 @@
+# TRANSFER AGENT
+- vars:
+    messages:
+      - role: user
+        content: Money transfer
+      - role: assistant
+        content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+      - role: user
+        content: Send to Sara $100
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Send money
+      - role: assistant
+        content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+      - role: user
+        content: Send to Sara $100
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Send money to Ken
+      - role: assistant
+        content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+      - role: user
+        content: $100
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Send $100 to Sarah
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer to Sarah
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer to Sarah
+      - role: assistant
+        content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+      - role: user
+        content: $100
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer to Sarah
+      - role: assistant
+        content: Sure, I can help you with that. Could you please provide more details? Are you trying to transfer money to a person named Sarah?
+      - role: user
+        content: Yess
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Send to Sarah
+  assert:
+    - type: llm-rubric
+      value: clarify if user want to make transfer to Sarah
+
+- vars:
+    messages:
+      - role: user
+        content: Send to Sarah
+      - role: assistant
+        content: I'm sorry, but I need a bit more context to assist you. Are you trying to transfer money to Sarah? If yes, I can help you with that. Please confirm so I can proceed."
+      - role: user
+        content: Yep
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Pay David 100$
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transfer_agent.py

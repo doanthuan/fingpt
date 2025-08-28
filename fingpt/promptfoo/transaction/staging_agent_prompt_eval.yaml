@@ -1,0 +1,25 @@
+description: 'Evaluate Transaction Agent Prompt for Staging Env'
+
+prompts:
+  - retail.transaction-report.azure-openai.extract-info:staging
+
+# These test properties are applied to every test
+defaultTest:
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: is-json
+
+providers:
+  - id: file://transaction_agent_runner.py:call_api
+    label: gpt-4o-mini
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o-mini
+
+
+tests: file://agent_graph_testcases.yaml

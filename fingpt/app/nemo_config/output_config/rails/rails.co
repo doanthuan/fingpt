@@ -1,0 +1,8 @@
+define flow self check bot response
+    $result = execute self_check_bot_response
+
+    bot respond
+    stop
+
+define bot respond
+    "$result"

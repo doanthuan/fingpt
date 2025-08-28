@@ -1,0 +1,36 @@
+description: 'Evaluate our main Primary Asisstant Prompt'
+
+prompts:
+  - retail.assistant.azure-open-ai.primary:latest
+
+providers:
+  - id: file://primary_agent_runner.py:call_api
+    label: gpt-4-32k-september
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4-32k-september
+
+  - id: 'file://primary_agent_runner.py:call_api'
+    label: gpt-4o
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o
+
+tests:
+  - vars:
+      messages:
+        - role: user
+          content: What can you do for me?
+
+    assert:
+      - type: llm-rubric
+        value: show the supported services
+
+  - vars:
+      messages:
+        - role: user
+          content: How are you?
+
+    assert:
+      - type: llm-rubric
+        value: Reply nicely

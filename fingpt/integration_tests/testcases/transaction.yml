@@ -1,0 +1,51 @@
+# following the format of transfer.yml, create a new testcase for transaction api which is defined at https://github.com/backbase-data/fin-gpt/pull/91
+testcases:
+  - name: Transaction summary for restaurants
+    steps:
+      - name: Request restaurant transactions
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to see my transactions which are related to restaurants. I don't have information about the number of transactions so don't ask me about this.
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Show me the restaurant transactions
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+      - name: Select beneficiary
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[0].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY
+            metadata:
+              type: TRANSACTION_DATA
+
+  - name: Uber transactions
+    steps:
+      - name: Request uber transactions
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Show me the my transactions with Uber
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY | SHOW_CHOICES

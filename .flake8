@@ -1,0 +1,5 @@
+# In setup.cfg or tox.ini or .flake8
+[flake8]
+max-line-length = 120
+ignore = E501, W503
+extend-ignore = E203, E701

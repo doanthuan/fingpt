@@ -1,0 +1,57 @@
+# CARD AGENT
+
+- vars:
+    messages:
+      - role: user
+        content: Show me my cards
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: create a new card
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: show my cards?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: how many cards do I have?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: card renew
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: open a new card
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Renew my card
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_agent.py

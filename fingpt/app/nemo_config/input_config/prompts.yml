@@ -1,0 +1,4 @@
+prompts:
+  - task: self_check_user_query
+    content: |
+SELF_CHECK_USER_QUERY

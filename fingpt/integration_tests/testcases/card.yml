@@ -1,0 +1,46 @@
+testcases:
+  - name: No renewable card
+    steps:
+      - name: User request renew card
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: I want to renew my card
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY
+
+  - name: Multiple renewable cards
+    steps:
+      - name: User request renew card that expire in 5 years
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: I want to renew my card that expire in 5 years
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+      - name: Select renewable card
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[0].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: RENEW_CARD
+            metadata:
+              type: RENEW_CARD_DATA
+              card:
+                id: "${steps[0].metadata.choices[0].id}"

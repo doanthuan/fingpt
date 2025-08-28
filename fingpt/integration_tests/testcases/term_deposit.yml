@@ -1,0 +1,206 @@
+testcases:
+  - name: Create new term deposit with all steps
+    steps:
+      - name: User asks to create a new term deposit
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: I want to create a new term deposit
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY
+
+      - name: User provides amount
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to create term deposit with $5000. I don't have information about the term number or term unit so don't ask me about this.
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: hmm, $5,000
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+
+      - name: User selects account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[1].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+
+      - name: User selects term deposit product
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[2].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: MAKE_TERM_DEPOSIT
+            metadata:
+              type: TERM_DEPOSIT_DATA
+              id: "${steps[2].metadata.choices[0].id}"
+              active_account:
+                id: "${steps[1].metadata.choices[0].id}"
+
+  - name: Create new term deposit with amount in initial query
+    steps:
+      - name: User asks to create a new term deposit with amount
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to create a 5000$ term deposit. I don't have information about the term number or term unit so don't ask me about this.
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: I want to create a 5000$ term deposit
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+
+      - name: User selects account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[0].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+
+      - name: User selects term deposit product
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[1].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: MAKE_TERM_DEPOSIT
+            metadata:
+              type: TERM_DEPOSIT_DATA
+              id: "${steps[1].metadata.choices[0].id}"
+              active_account:
+                id: "${steps[0].metadata.choices[0].id}"
+
+  - name: Create new term but too small amount
+    steps:
+      - name: User asks to create a new term deposit with amount
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to create a 100$ term deposit. I don't have information about the term number or term unit so don't ask me about this.
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: I want to create a 100$ term deposit
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+      - name: select account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[0].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY
+
+  - name: Renew term deposit with no amount in initial query
+    steps:
+      - name: User asks to renew term deposit with no amount
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: "I want to renew my term deposit and need to select from the list of term deposit account.
+           If asking for the number of term deposit number, term unit or term amount,
+            say that I don't have information about it so don't ask me about this"
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Hi, please help me with term deposit
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+
+      - name: User selects term deposit account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[0].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+
+      - name: User selects term deposit product
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[1].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: RENEW_TERM_DEPOSIT
+            metadata:
+              type: TERM_DEPOSIT_DATA
+              id: "${steps[0].metadata.choices[0].id}"
+              renewal_account:
+                id: "${steps[0].metadata.choices[0].id}"

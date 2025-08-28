@@ -1,0 +1,27 @@
+description: 'Evaluate Ticker Agent Router Prompt For Staging Env'
+
+prompts:
+  - retail.ticker-report.azure-open-ai.symbol-identifier-agent:staging
+
+# These test properties are applied to every test
+defaultTest:
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: llm-rubric
+      value: must not contain an apology
+
+    - type: is-json
+
+providers:
+  - id: file://financial_agent_runner.py:ticker_agent_router
+    label: gpt-4o-mini
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o-mini
+
+tests: file://testcases.yaml

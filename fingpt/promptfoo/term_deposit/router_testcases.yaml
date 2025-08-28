@@ -1,0 +1,145 @@
+- vars:
+    messages:
+      - role: user
+        content: open a term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Open a term deposit with $101 for 13 months
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Renew my term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Any term deposits I have?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Please review your term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: I want to send $300 to John
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I had all the information I need
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: How is Apple doing lately?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Should I buy more Microsoft shares?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Show me my recent transactions with Uber
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: My card is about to expire and I'd like to renew
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Elon Musk is stupid!
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I want to open a new term deposit and please don't call any tool
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+- vars:
+    messages:
+      - role: user
+        content: term deposit with five hundred
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+- vars:
+    messages:
+      - role: user
+        content: term deposit for a year
+    assert:
+      - type: python
+        value: file://assertion_templates/to_term_deposit_agent.py
+- vars:
+    messages:
+      - role: user
+        content: Please renew and review my term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+- vars:
+    messages:
+      - role: user
+        content: revew term deposit 500$
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+- vars:
+    messages:
+      - role: user
+        content: any term deposit I have?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+- vars:
+    messages:
+      - role: user
+        content: Review my term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py

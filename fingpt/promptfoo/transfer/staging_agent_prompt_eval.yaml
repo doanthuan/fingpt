@@ -1,0 +1,30 @@
+description: 'Evaluate Money Transfer Agent Prompt for Staging Env'
+
+prompts:
+  - retail.transfer-money.azure-openai.extract-info-v2:staging # test
+
+# These test properties are applied to every test
+defaultTest:
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: is-json
+
+providers:
+  - id: file://transfer_agent_runner.py:call_api
+    label: gpt-4-32k-september
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4-32k-september
+
+  - id: file://transfer_agent_runner.py:call_api
+    label: gpt-4o
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o
+
+tests: file://agent_graph_testcases.yaml

@@ -1,0 +1,85 @@
+name: Integration Test
+on:
+  schedule: # run on 8:10, 12:10, 16:10, 20:10 UTC +7
+    - cron: 10 1,5,9,13 * * 1,2,3,4,5
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Tags to filter the test cases'
+        required: false
+        default: 'manual'
+jobs:
+  integration_test:
+    name: Integration Test
+    runs-on: ubuntu-latest
+    environment: fingpt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.4
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.6.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          virtualenvs-path: .venv
+          installer-parallel: true
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: fingpt/.venv
+          key: poetry-${{ hashFiles('fingpt/pyproject.toml') }}
+      - name: Install dependencies
+        if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
+        run: cd fingpt && poetry install
+      - name: Prepare environment
+        run: |
+          echo "$VARS" | sed -e 's/[{}]//g' -e 's/"//g' -e 's/,//g' | awk -F: '{
+            if (NF == 2) {
+              gsub(/^ +| +$/,"",$1); gsub(/^ +| +$/,"",$2); if ($1 != "" && $2 != "") { print $1 "=" $2 }
+            } else if (NF > 2) {
+              gsub(/^ +| +$/,"",$1);
+              gsub(/^ +| +$/,"",$2);
+              printf "%s=%s", $1, $2
+              for (i = 3; i <= NF; i++) {
+                  gsub(/^ +| +$/,"",$i);
+                  printf ":%s", $i
+              }
+              print ""
+            }
+          }' > fingpt/.env
+          cat fingpt/.env
+        env:
+          VARS: ${{ toJSON(vars) }}
+      - name: Run integration tests
+        id: integration-tests
+        run: |
+          cd fingpt
+          source .venv/bin/activate
+          python integration_tests/runner.py 127.0.0.1 8000
+        env:
+          EBP_TEST_ACCOUNT_PASSWORD: ${{ secrets.EBP_TEST_ACCOUNT_PASSWORD }}
+          LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+          EBP_EDGE_DOMAIN: ${{ secrets.EBP_EDGE_DOMAIN }}
+
+      - name: Send result to Slack
+        id: slack
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ always() }}
+        env:
+          SLACK_USERNAME: GitHub Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_COLOR: ${{ steps.integration-tests.outcome }}
+          SLACK_TITLE: "Integration Test Result :bell: :bell: :bell:"
+          SLACK_MESSAGE_ON_SUCCESS: "Integration tests passed successfully :tada:"
+          SLACK_MESSAGE_ON_FAILURE: ":x: Integration tests failed :x: Please check the logs for more details."
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

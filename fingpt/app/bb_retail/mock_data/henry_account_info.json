@@ -1,0 +1,73 @@
+{
+    "termDeposits": {
+        "name": "Term Deposits",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": [
+            {
+                "id": "95df8a78-8e39-431b-b50c-4732b1742bbd",
+                "name": "Fixed Deposit",
+                "displayName": "Fixed Deposit",
+                "externalTransferAllowed": false,
+                "crossCurrencyAllowed": false,
+                "productKindName": "Term Deposit",
+                "productTypeName": "Fixed Deposit",
+                "bankAlias": "FD1",
+                "visible": true,
+                "accountOpeningDate": "2024-05-08T19:44:10Z",
+                "lastUpdateDate": "2024-08-26T22:43:12Z",
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "10000.0000000000",
+                "availableBalance": "0.0000000000",
+                "accruedInterest": 50.00000,
+                "BBAN": "**************************3344",
+                "currency": "USD",
+                "bankBranchCode": "11103096",
+                "accountInterestRate": 5.00,
+                "accountHolderNames": "Henry Nigel William Inglesome Nigel",
+                "creditAccount": true,
+                "debitAccount": false,
+                "unmaskableAttributes": [
+                    "BBAN"
+                ],
+                "bban": "**************************3344",
+                "maturityDate": "2025-08-26T22:43:12Z"
+            },
+            {
+                "id": "ea5a8934-1f3b-45b3-bd4b-332b9a31f9b9",
+                "name": "Recurring Deposit",
+                "displayName": "Recurring Deposit",
+                "externalTransferAllowed": false,
+                "crossCurrencyAllowed": false,
+                "productKindName": "Term Deposit",
+                "productTypeName": "Recurring Deposit",
+                "bankAlias": "RD1",
+                "visible": true,
+                "accountOpeningDate": "2024-05-08T19:44:15Z",
+                "lastUpdateDate": "2024-08-26T22:43:18Z",
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "5000.0000000000",
+                "availableBalance": "0.0000000000",
+                "accruedInterest": 25.00000,
+                "BBAN": "**************************5566",
+                "currency": "USD",
+                "bankBranchCode": "11103097",
+                "accountInterestRate": 4.50,
+                "accountHolderNames": "Henry Nigel William Inglesome Nigel",
+                "creditAccount": true,
+                "debitAccount": false,
+                "unmaskableAttributes": [
+                    "BBAN"
+                ],
+                "bban": "**************************5566",
+                "maturityDate": "2025-08-26T22:43:18Z"
+            }
+        ]
+    }
+}

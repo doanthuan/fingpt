@@ -1,0 +1,45 @@
+repos:
+  - repo: https://github.com/mwouts/jupytext
+    rev: v1.14.7  # CURRENT_TAG/COMMIT_HASH
+    hooks:
+      - id: jupytext
+        args: [ --sync, --pipe, black ]
+        additional_dependencies:
+          - black==24.8.0 # Matches hook
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: fingpt/notebooks/
+      - id: end-of-file-fixer
+      - id: check-yaml
+        exclude: fingpt/app/nemo_config/
+      - id: debug-statements
+      - id: name-tests-test
+      - id: requirements-txt-fixer
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: [ '--baseline', '.secrets.baseline' ]
+        exclude: fingpt/notebooks/ipynbs/|fingpt/app/dev-notebook/
+
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.1
+    hooks:
+      - id: flake8
+        exclude: fingpt/notebooks/
+
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        exclude: fingpt/notebooks/
+
+  - repo: https://github.com/ambv/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        language_version: python3.11.4

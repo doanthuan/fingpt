@@ -1,0 +1,88 @@
+# TICKER IDENTIFIER
+- vars:
+    messages:
+      - role: user
+        content: Can you help me generate financial report for Apple?
+  assert:
+    - type: python
+      value: file://assertion_templates/ticker_symbol_identifier.py
+
+- vars:
+    messages:
+      - role: user
+        content: Are there any significant changes in the tesla's equity position?
+  assert:
+    - type: python
+      value: file://assertion_templates/ticker_symbol_identifier.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: How is Microsoft doing lately?
+  assert:
+    - type: python
+      value: file://assertion_templates/ticker_symbol_identifier.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me the finance report for Apple
+  assert:
+    - type: python
+      value: file://assertion_templates/ticker_symbol_identifier.py
+
+- vars:
+    messages:
+      - role: user
+        content: Show me Apple report
+  assert:
+    - type: python
+      value: file://assertion_templates/ticker_symbol_identifier.py
+
+# Report Generator
+- vars:
+    messages:
+      - role: user
+        content: Show me Apple report
+      - role: assistant
+        content: AAPL
+  assert:
+    - type: python
+      value: file://assertion_templates/report_generator.py
+
+# CompleteOrEscalateTool
+- vars:
+    messages:
+      - role: user
+        content: How are you?
+  assert:
+    - type: python
+      value: file://assertion_templates/complete_or_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me the finance report for Apple
+      - role: assistant
+        content: Here is the report of Apple
+      - role: user
+        content: How about Tesla?
+      - role: assistant
+        content: Here is the report of Tesla
+      - role: user
+        content: Can I renew my term deposit?
+  assert:
+    - type: python
+      value: file://assertion_templates/complete_or_escalate_tool.py

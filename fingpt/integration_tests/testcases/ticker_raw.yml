@@ -1,0 +1,368 @@
+testcases:
+  - name: AAPL
+    steps:
+      - name: post
+        assert_method: key_and_type
+        input:
+          symbol: AAPL
+          raw_data_format: MARKDOWN
+        output: &ticker_output
+          status: 200
+          response:
+            company_info: dict
+            analyst_recommendation: str
+            section_7_text: str
+            home_chart_data: list
+            sp500_chart_data: list
+            key_data: dict
+            income_stmt: str
+            balance_sheet: str
+            cash_flow: str
+            symbol: str
+            summary: str
+            income_stmt_report: str
+            balance_sheet_report: str
+            cash_flow_report: str
+
+#  - name: ABBV
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: ABBV
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  # Generate testcases for AMD, AMZN, ASTS, AVGO, BFI, CMAX, CMG, BRK, COUR, DECK, DOW, DXCM, GOOG,
+#  # GOOGL, IBM, HON, KLAC, LINE, LLY, LULU, LW< MCD, META, MSFT, NOW, NSC, NVDA, OPTT, PLTR, POAI,
+#  # RCL, RTX, SERV, SGMO, SKX< SMCI, TCS, TSLA, TXRH
+#  - name: AMD
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: AMD
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: AMZN
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: AMZN
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: ASTS
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: ASTS
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: AVGO
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: AVGO
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: BFI
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: BFI
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: CMAX
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: CMAX
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: CMG
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: CMG
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: BRK-B
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: BRK-B
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: COUR
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: COUR
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  #  - name: DECK
+#  #    steps:
+#  #      - name: post
+#  #        assert_method: key_and_type
+#  #        input:
+#  #          symbol: DECK
+#  #          raw_data_format: MARKDOWN
+#  #        output: *ticker_output
+#  - name: DOW
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: DOW
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: DXCM
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: DXCM
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: GOOG
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: GOOG
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: GOOGL
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: GOOGL
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: IBM
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: IBM
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: HON
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: HON
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: KLAC
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: KLAC
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: LINE
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: LINE
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: LLY
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: LLY
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: LULU
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: LULU
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: LW
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: LW
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#  - name: MCD
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: MCD
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: META
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: META
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: MSFT
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: MSFT
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: NOW
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: NOW
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: NSC
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: NSC
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: NVDA
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: NVDA
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: OPTT
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: OPTT
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: PLTR
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: PLTR
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: POAI
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: POAI
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: RCL
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: RCL
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: RTX
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: RTX
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: SERV
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: SERV
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: SGMO
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: SGMO
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: SKX
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: SKX
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: SMCI
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: SMCI
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: TCS
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: TCS
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: TSLA
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: TSLA
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output
+#
+#  - name: TXRH
+#    steps:
+#      - name: post
+#        assert_method: key_and_type
+#        input:
+#          symbol: TXRH
+#          raw_data_format: MARKDOWN
+#        output: *ticker_output

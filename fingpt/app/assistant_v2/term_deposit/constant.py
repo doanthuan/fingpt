@@ -1,0 +1,8 @@
+MESSAGE_CONTENT = "content"
+
+NOTICE_DEPOSIT_AMOUNT_TOOL_NAME = "NoticeDepositAmountTool"
+NOTICE_TERM_NUMBER_TOOL_NAME = "NoticeTermNumberTool"
+NOTICE_TERM_UNIT_TOOL_NAME = "NoticeTermUnitTool"
+GET_ACCOUNT_TOOL_NAME = "GetAccountTool"
+GET_TERM_DEPOSIT_PRODUCT_TOOL_NAME = "GetTermDepositProductTool"
+GET_TERM_DEPOSIT_ACCOUNT_TOOL_NAME = "GetTermDepositAccountTool"

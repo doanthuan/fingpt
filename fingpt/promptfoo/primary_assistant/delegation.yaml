@@ -1,0 +1,33 @@
+description: 'Evaluate our main Primary Asisstant Prompt'
+
+prompts:
+  - retail.assistant.azure-open-ai.primary:staging
+
+# These test properties are applied to every test
+defaultTest:
+  threshold: 0.8
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: llm-rubric
+      value: must not contain an apology
+
+    - type: is-json
+
+providers:
+  - id: 'file://primary_agent_runner.py:call_api'
+    label: gpt-4o-mini
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o-mini
+
+tests:
+  - file://financial_report_testcases.yaml
+  - file://transaction_report_testcases.yaml
+  - file://transfer_testcases.yaml
+  - file://term_deposit_testcases.yaml
+  - file://card_testcases.yaml

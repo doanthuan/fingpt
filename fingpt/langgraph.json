@@ -1,0 +1,11 @@
+{
+  "dockerfile_lines": [],
+  "graphs": {
+    "transaction_agent": "./app/assistant_v2/transaction/graph.py:workflow"
+  },
+  "env": ".env",
+  "python_version": "3.11",
+  "dependencies": [
+    "pyproject.toml"
+  ]
+}

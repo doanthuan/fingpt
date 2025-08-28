@@ -1,0 +1,48 @@
+configs:
+  - name: Test ticker raw
+    login_required: false
+    api_url: /v1/reports/ticker/raw
+    method: POST
+    testcases_path: integration_tests/testcases/ticker_raw.yml
+    batch_size: 10
+    timeout: 200
+  - name: Test transfer
+    login_required: true
+    api_url: /v1/assistant/chat
+    method: POST
+    testcases_path: integration_tests/testcases/transfer.yml
+    batch_size: 1
+    timeout: 200
+  - name: Test transaction
+    login_required: true
+    api_url: /v1/assistant/chat
+    method: POST
+    testcases_path: integration_tests/testcases/transaction.yml
+  - name: Test term deposit
+    login_required: true
+    api_url: /v1/assistant/chat
+    method: POST
+    testcases_path: integration_tests/testcases/term_deposit.yml
+    batch_size: 1
+    timeout: 200
+  - name: Test card
+    login_required: true
+    api_url: /v1/assistant/chat
+    method: POST
+    testcases_path: integration_tests/testcases/card.yml
+    batch_size: 1
+    timeout: 200
+  - name: Test all use cases
+    login_required: true
+    api_url: /v1/assistant/chat
+    method: POST
+    testcases_path: integration_tests/testcases/all_user_cases.yml
+    batch_size: 1
+    timeout: 400
+login_api:
+  api_url: /v1/auth/login
+  input_username: sdbxaz-stg-sara
+  input_password_env: EBP_TEST_ACCOUNT_PASSWORD # pragma: allowlist secret
+  user_type: retail
+  access_token_field: access_token
+  cookie_field: cookie

@@ -1,0 +1,13 @@
+.env
+workbook.ipynb
+__pycache__
+mlruns
+**__pycache__
+projects
+.idea
+.DS_Store
+.idea
+*.iml
+local/*
+fingpt/notebooks/ipynbs/test.md
+.vscode/launch.json

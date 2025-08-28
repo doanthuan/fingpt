@@ -1,0 +1,34 @@
+description: 'Evaluate Term Deposit Agent Prompt for Staging Env'
+
+prompts:
+  - retail.term-deposit.azure-open-ai.extract-user-query-v2:staging
+
+# These test properties are applied to every test
+defaultTest:
+  options:
+    provider:
+      text:
+        id: azureopenai:chat:gpt-4o
+        config:
+          apiHost: https://backbase-ai.openai.azure.com/
+  #          model: gpt-4o
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: is-json
+
+    # - type: llm-rubric
+    #   value: must not contain an apology
+
+providers:
+  - id: file://term_deposit_agent_runner.py:call_api
+    label: gpt-4o-mini
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o-mini
+
+tests: file://agent_graph_testcases.yaml

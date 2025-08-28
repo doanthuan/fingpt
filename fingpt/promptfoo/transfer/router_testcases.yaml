@@ -1,0 +1,153 @@
+- vars:
+    messages:
+      - role: user
+        content: money transfer
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+- vars:
+    messages:
+      - role: user
+        content: I want to send $300 to John
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+- vars:
+    messages:
+      - role: user
+        content: Transfer money money to David
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+- vars:
+    messages:
+      - role: user
+        content: I want to send $500 to my friend saving account
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: transfer money with all the information I need
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+- vars:
+    messages:
+      - role: user
+        content: transfer money, don't open a new term-deposit account
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+
+
+- vars:
+    messages:
+      - role: user
+        content: transfer money
+      - role: assistant
+        content: Sure, I can help with that. Could you please provide me with the name of the recipient and the amount you wish to transfer?
+      - role: user
+        content: $5000
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer money
+      - role: assistant
+        content: Sure, I can help with that. Could you please provide me with the name of the recipient and the amount you wish to transfer?
+      - role: user
+        content: $5000
+      - role: assistant
+        content: Could you please provide me with the name of the recipient?
+      - role: user
+        content: Apple Share
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer 5000$ to Microsoft Share
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer money
+      - role: assistant
+        content: Sure, I can help with that. Could you please provide me with the name of the recipient and the amount you wish to transfer?
+      - role: user
+        content: $5000
+      - role: assistant
+        content: Could you please provide me with the name of the recipient?
+      - role: user
+        content: a stupid guy Trump
+  assert:
+    - type: python
+      value: file://assertion_templates/to_money_transfer.py
+
+
+- vars:
+    messages:
+      - role: user
+        content: Please review your cash transfer request
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: I want to send $500 to my saving account
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: I had all the information I need
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: How is Apple doing lately?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: Should I buy more Microsoft shares?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: Show me my recent transactions with Uber
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: open a new or re-new term-deposit account
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: Elon Musk is stupid!
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py

@@ -1,0 +1,109 @@
+# TRANSACTION REPORT
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: How is Microsoft doing lately?
+      - role: assistant
+        content: It is ok.
+      - role: user
+        content: Show me my last 3 transactions.
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transaction_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me the my recent transactions to Apple
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/to_transaction_agent.py
+        - type: llm-rubric
+          value: ask for clarifying
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me the my recent transactions to Apple
+      - role: assistant
+        content: To clarify, would you like to see your transaction history with Apple, or are you looking for Apple's financial report?
+      - role: user
+        content: My transaction history with Apple
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transaction_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me my Uber transactions
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transaction_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: my transactions with Uber
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transaction_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: How many transactions I made with Sara last month?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transaction_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: McDonald transactions report
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/to_transaction_agent.py
+        - type: llm-rubric
+          value: ask for clarifying
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: McDonald transactions report
+      - role: assistant
+        content: To clarify, would you like to see your transaction report related to McDonald's, or are you looking for McDonald's financial report?
+      - role: user
+        content: My transaction report related to McDonald's
+  assert:
+    - type: python
+      value: file://assertion_templates/to_transaction_agent.py

@@ -1,0 +1,54 @@
+name: Build Fingpt
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.4
+      #      - name: Install tox and any other packages
+      #        run: pip install tox
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.6.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          virtualenvs-path: .venv
+          installer-parallel: true
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: fingpt/.venv
+          key: poetry-${{ hashFiles('fingpt/pyproject.toml') }}
+      - name: Install dependencies
+        if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true' }}
+        run: cd fingpt && poetry install
+      - name: Run tests
+        run: |
+          cd fingpt
+          source .venv/bin/activate
+          pytest --cov=../ --cov-report=xml:../coverage.xml --cov-branch
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=backbase-data_fin-gpt
+            -Dsonar.organization=backbase-data
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.verbose=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

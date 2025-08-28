@@ -1,0 +1,1 @@
+SYMBOL_SP_500 = "^GSPC"

@@ -1,0 +1,470 @@
+description: 'Evaluate our main Primary Asisstant Prompt'
+
+prompts:
+  - langfuse://retail.assistant.azure-open-ai.primary:20
+  # - langfuse://retail.assistant.azure-open-ai.primary:19
+
+# These test properties are applied to every test
+defaultTest:
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: llm-rubric
+      value: must not contain an apology
+
+    - type: is-json
+
+providers:
+  - id: file://primary_agent_runner.py:call_api
+    label: gpt-4-not-retrive-cache
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4-32k-september
+
+  - id: 'file://primary_agent_runner.py:call_api_with_cache'
+    label: gpt-4-retrieve-cache-tool_call
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4-32k-september
+      cache_type: "message-tool_call"
+
+tests:
+  # FINANCIAL REPORT
+  - vars:
+      messages:
+        - role: user
+          content: Can you help me generate financial report for Apple?
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Generate financial report for google
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Are there any significant changes in the tesla's equity position?
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: How is Microsoft doing lately?
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: Show me Apple.
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: Show me the finance report for Apple
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Show me Apple stock report
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: How is Tesla stock performance?
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: Show me the finance report for Apple
+        - role: assistant
+          content: Here is the report of Apple
+        - role: user
+          content: How is Tesla stock performance?
+        - role: assistant
+          content: Here is the report of Tesla
+        - role: user
+          content: Show me Amazon stock report
+        - role: assistant
+          content: Here is the Amazon stock report
+    assert:
+      - $ref: '#/assertionTemplates/toTickerAgent'
+
+  # TRANSACTION REPORT
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: How is Microsoft doing lately?
+        - role: assistant
+          content: It is ok.
+        - role: user
+          content: Show me my last 3 transactions.
+    assert:
+      - $ref: '#/assertionTemplates/toTransactionAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: Show me the my recent transactions to Apple
+    assert:
+      - $ref: '#/assertionTemplates/toTransactionAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: Show me my Uber transactions
+    assert:
+      - $ref: '#/assertionTemplates/toTransactionAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: my transactions with Uber
+    assert:
+      - $ref: '#/assertionTemplates/toTransactionAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: How many transactions I made with Sara last month?
+    assert:
+      - $ref: '#/assertionTemplates/toTransactionAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Hi
+        - role: assistant
+          content: Hello! How can I assist you with your banking needs today?
+        - role: user
+          content: McDonald transactions report
+    assert:
+      - $ref: '#/assertionTemplates/toTransactionAgent'
+
+  # TRANSFER AGENT
+
+  - vars:
+      messages:
+        - role: user
+          content: Money transfer
+        - role: assistant
+          content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+        - role: user
+          content: Send to Sara $100
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Send money
+        - role: assistant
+          content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+        - role: user
+          content: Send to Sara $100
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Send money to Ken
+        - role: assistant
+          content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+        - role: user
+          content: $100
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Send $100 to Sarah
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Transfer to Sarah
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Transfer to Sarah
+        - role: assistant
+          content: Please provide the details of the transfer, including the amount and any additional information required for the transaction.
+        - role: user
+          content: $100
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Transfer to Sarah
+        - role: assistant
+          content: Sure, I can help you with that. Could you please provide more details? Are you trying to transfer money to a person named Sarah?
+        - role: user
+          content: Yess
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Send to Sarah
+    assert:
+      - type: llm-rubric
+        value: clarify if user want to make transfer to Sarah
+
+  - vars:
+      messages:
+        - role: user
+          content: Send to Sarah
+        - role: assistant
+          content: I'm sorry, but I need a bit more context to assist you. Are you trying to transfer money to Sarah? If yes, I can help you with that. Please confirm so I can proceed."
+        - role: user
+          content: Yep
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Pay David 100$
+    assert:
+      - $ref: '#/assertionTemplates/toTransferAgent'
+
+  # TERM DEPOSIT AGENT
+
+  - vars:
+      messages:
+        - role: user
+          content: Open new term deposit
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Renew my term deposit
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: How much money in my term deposit accounts?
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: How many term deposit accounts do I have?
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Show me my term deposit accounts
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Term deposit
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Put 100$ to term deposit
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: I want to open new term deposit account
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: When is my term deposit mature
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: deposit money
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: deposit $10000
+    assert:
+      - $ref: '#/assertionTemplates/toTermDepositAgent'
+
+  # CARD AGENT
+
+  - vars:
+      messages:
+        - role: user
+          content: Show me my cards
+    assert:
+      - $ref: '#/assertionTemplates/toCardAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: create a new card
+    assert:
+      - $ref: '#/assertionTemplates/toCardAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: show my cards?
+    assert:
+      - $ref: '#/assertionTemplates/toCardAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: how many cards do I have?
+    assert:
+      - $ref: '#/assertionTemplates/toCardAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: card renew
+    assert:
+      - $ref: '#/assertionTemplates/toCardAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: open a new card
+    assert:
+      - $ref: '#/assertionTemplates/toCardAgent'
+
+  - vars:
+      messages:
+        - role: user
+          content: Renew my card
+    assert:
+      - $ref: '#/assertionTemplates/toCardAgent'
+
+assertionTemplates:
+  toTickerAgent:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        len(tool_calls) == 1
+        and tool_calls[0]['name'] == 'ToTickerAgent'
+        and tool_calls[0]['args'] == {}
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  toTransactionAgent:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        len(tool_calls) == 1
+        and tool_calls[0]['name'] == 'ToTransactionAgent'
+        and tool_calls[0]['args'] == {}
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  toTransferAgent:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        len(tool_calls) == 1
+        and tool_calls[0]['name'] == 'ToTransferAgent'
+        and tool_calls[0]['args'] == {}
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  toTermDepositAgent:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        len(tool_calls) == 1
+        and tool_calls[0]['name'] == 'ToTermDepositAgent'
+        and tool_calls[0]['args'] == {}
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  toCardAgent:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        len(tool_calls) == 1
+        and tool_calls[0]['name'] == 'ToCardAgent'
+        and tool_calls[0]['args'] == {}
+        and tool_calls[0]['type'] == 'tool_call'
+      )

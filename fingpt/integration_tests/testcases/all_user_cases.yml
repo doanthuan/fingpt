@@ -1,0 +1,199 @@
+testcases:
+  - name: Switch between all use cases
+    steps:
+      - name: Start with transaction report
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to see my transaction report with David
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Show me the transaction report with David
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY | SHOW_CHOICES
+            metadata:
+              type: TRANSACTION_DATA
+      - name: Switch to financial report
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to see the financial report of Apple Inc.
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Show me the financial report of Apple Inc.
+        output:
+          status: 200
+          response:
+            action: SHOW_TICKER_REPORT
+            metadata:
+              type: SHOW_TICKER_REPORT_DATA
+              ticker: AAPL
+      - name: Switch to money transfer
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to transfer 300$ to David
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Transfer 300$ to David
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+      - name: Select account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[2].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: MAKE_TRANSFER
+            metadata:
+              type: TRANSFER_DATA
+              account:
+                id: "${steps[2].metadata.choices[0].id}"
+              transfer_amount: 300
+      - name: Switch to crete a term deposit
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: I want to create a new term deposit
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY
+      - name: User provides amount
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: "I want to create term deposit with $5000.
+           I don't have information about the term number or term unit so don't ask me about this.
+           If asking, just say I don't know about it"
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: hmm, $5,000
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+
+      - name: User selects account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[5].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+
+      - name: User selects term deposit product
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[6].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: MAKE_TERM_DEPOSIT
+            metadata:
+              type: TERM_DEPOSIT_DATA
+              id: "${steps[6].metadata.choices[0].id}"
+              active_account:
+                id: "${steps[5].metadata.choices[0].id}"
+      - name: switch to renew card
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: I want to renew my card
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY
+      - name: switch back to renew term deposit
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: "I want to renew my term deposit and need to select from the list of term deposit account.
+           If asking for the number of term deposit number, term unit or term amount,
+            say that I don't have information about it so don't ask me about this"
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Hi, I want to renew my term deposit
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+
+      - name: User selects term deposit account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[9].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+            metadata:
+              type: CHOICES_DATA
+
+      - name: User selects term deposit product
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[10].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: RENEW_TERM_DEPOSIT
+            metadata:
+              type: TERM_DEPOSIT_DATA
+              id: "${steps[9].metadata.choices[0].id}"
+              renewal_account:
+                id: "${steps[9].metadata.choices[0].id}"

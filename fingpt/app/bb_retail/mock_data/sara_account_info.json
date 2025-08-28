@@ -1,0 +1,522 @@
+{
+    "currentAccounts": {
+        "name": "Current Accounts",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": [
+            {
+                "id": "34b399a6-fc46-4921-9109-7a8361348a1f",
+                "name": "Retirement Account",
+                "displayName": "Testing account",
+                "externalTransferAllowed": true,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Current Account",
+                "productTypeName": "Current Account",
+                "bankAlias": "Retirement Account",
+                "visible": true,
+                "accountOpeningDate": "2024-05-22T15:03:27Z",
+                "lastUpdateDate": "2024-08-27T00:00:00Z",
+                "userPreferences": {
+                    "alias": "Testing account",
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "7863.1900000000",
+                "availableBalance": "7863.1900000000",
+                "creditLimit": "0.00000",
+                "BBAN": "***************6944",
+                "BIC": "USXBUSHQXXX",
+                "currency": "USD",
+                "bankBranchCode": "123123123",
+                "accountInterestRate": 3.00,
+                "creditLimitUsage": 0.00000,
+                "creditLimitInterestRate": 2.00,
+                "accruedInterest": 18.00398,
+                "debitCardsItems": [],
+                "accountHolderNames": "Sara Williams Williams",
+                "creditAccount": true,
+                "debitAccount": true,
+                "unmaskableAttributes": [
+                    "BBAN"
+                ],
+                "bic": "USXBUSHQXXX",
+                "bban": "***************6944"
+            },
+            {
+                "id": "3f3d92e9-b455-4717-9097-5cc054e8dd41",
+                "name": "Primary Account",
+                "displayName": "Sarah Connor account",
+                "externalTransferAllowed": true,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Current Account",
+                "productTypeName": "Current Account",
+                "bankAlias": "Primary Account",
+                "visible": true,
+                "accountOpeningDate": "2024-05-08T19:44:20Z",
+                "lastUpdateDate": "2024-08-26T22:42:25Z",
+                "userPreferences": {
+                    "alias": "Sarah Connor account",
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "-1224.2900000000",
+                "availableBalance": "1623.5500000000",
+                "creditLimit": "2845.75000",
+                "IBAN": "**************8755",
+                "BBAN": "*****************8755",
+                "BIC": "USXBUSHQXXX",
+                "currency": "USD",
+                "bankBranchCode": "123123123",
+                "accountInterestRate": 3.00,
+                "creditLimitUsage": 1222.20000,
+                "creditLimitInterestRate": 2.00,
+                "accruedInterest": 0.00000,
+                "debitCardsItems": [],
+                "accountHolderNames": "Sara Williams Williams",
+                "creditAccount": true,
+                "debitAccount": true,
+                "unmaskableAttributes": [
+                    "IBAN",
+                    "BBAN"
+                ],
+                "bic": "USXBUSHQXXX",
+                "bban": "*****************8755",
+                "iban": "**************8755"
+            },
+            {
+                "id": "4f1942e4-e480-4cff-a161-e080abe0b5fb",
+                "name": "Personal Account",
+                "displayName": "Personal Account",
+                "externalTransferAllowed": true,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Current Account",
+                "productTypeName": "Current Account",
+                "bankAlias": "Personal Account",
+                "visible": true,
+                "accountOpeningDate": "2024-05-08T19:44:09Z",
+                "lastUpdateDate": "2024-08-26T22:41:59Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "-30632.6600000000",
+                "availableBalance": "1064.4800000000",
+                "creditLimit": "31645.00000",
+                "IBAN": "**************4356",
+                "BBAN": "*****************4356",
+                "BIC": "USXBUSHQXXX",
+                "currency": "USD",
+                "bankBranchCode": "123123123",
+                "accountInterestRate": 3.00,
+                "creditLimitUsage": 30626.07000,
+                "creditLimitInterestRate": 2.00,
+                "accruedInterest": 0.00000,
+                "debitCardsItems": [],
+                "accountHolderNames": "Sara Williams Williams",
+                "creditAccount": true,
+                "debitAccount": true,
+                "unmaskableAttributes": [
+                    "IBAN",
+                    "BBAN"
+                ],
+                "bic": "USXBUSHQXXX",
+                "bban": "*****************4356",
+                "iban": "**************4356"
+            },
+            {
+                "id": "b282e899-5645-4f1d-91ed-1e570294a090",
+                "name": "The Williams' Joint Account",
+                "displayName": "The Williams' Joint Account",
+                "externalTransferAllowed": true,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Current Account",
+                "productTypeName": "Current Account",
+                "bankAlias": "The Williams' Joint Account",
+                "visible": true,
+                "accountOpeningDate": "2024-05-08T19:44:28Z",
+                "lastUpdateDate": "2024-08-26T22:41:40Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "0",
+                "availableBalance": "2845.7500000000",
+                "creditLimit": "2845.75000",
+                "IBAN": "**************7464",
+                "BBAN": "*****************7464",
+                "BIC": "USXBUSHQXXX",
+                "currency": "USD",
+                "bankBranchCode": "123123123",
+                "accountInterestRate": 3.00,
+                "creditLimitUsage": 0.00000,
+                "creditLimitInterestRate": 2.00,
+                "accruedInterest": 0.03780,
+                "debitCardsItems": [],
+                "accountHolderNames": "Sara Williams Williams",
+                "creditAccount": true,
+                "debitAccount": true,
+                "unmaskableAttributes": [
+                    "IBAN",
+                    "BBAN"
+                ],
+                "bic": "USXBUSHQXXX",
+                "bban": "*****************7464",
+                "iban": "**************7464"
+            },
+            {
+                "id": "b8016682-ca55-48d3-85e4-a81c66cf3462",
+                "name": "General Investing",
+                "displayName": "General Investing",
+                "externalTransferAllowed": true,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Current Account",
+                "productTypeName": "Current Account",
+                "bankAlias": "General Investing",
+                "visible": true,
+                "accountOpeningDate": "2024-05-22T15:03:17Z",
+                "lastUpdateDate": "2024-08-26T22:41:59Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "7173.9600000000",
+                "availableBalance": "7173.9600000000",
+                "creditLimit": "0.00000",
+                "BBAN": "***************6943",
+                "BIC": "USXBUSHQXXX",
+                "currency": "USD",
+                "bankBranchCode": "123123123",
+                "accountInterestRate": 3.00,
+                "creditLimitUsage": 0.00000,
+                "creditLimitInterestRate": 2.00,
+                "accruedInterest": 15.29170,
+                "debitCardsItems": [],
+                "accountHolderNames": "Sara Williams Williams",
+                "creditAccount": true,
+                "debitAccount": true,
+                "unmaskableAttributes": [
+                    "BBAN"
+                ],
+                "bic": "USXBUSHQXXX",
+                "bban": "***************6943"
+            },
+            {
+                "id": "b829e1a2-e880-495f-a8e7-220a919f760d",
+                "name": "Education Portfolio",
+                "displayName": "Education Portfolio",
+                "externalTransferAllowed": true,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Current Account",
+                "productTypeName": "Current Account",
+                "bankAlias": "Education Portfolio",
+                "visible": true,
+                "accountOpeningDate": "2024-05-22T15:03:36Z",
+                "lastUpdateDate": "2024-08-26T22:42:35Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "10773.3500000000",
+                "availableBalance": "10773.3500000000",
+                "creditLimit": "0.00000",
+                "BBAN": "***************6945",
+                "BIC": "USXBUSHQXXX",
+                "currency": "USD",
+                "bankBranchCode": "123123123",
+                "accountInterestRate": 3.00,
+                "creditLimitUsage": 0.00000,
+                "creditLimitInterestRate": 2.00,
+                "accruedInterest": 22.96399,
+                "debitCardsItems": [],
+                "accountHolderNames": "Sara Williams Williams",
+                "creditAccount": true,
+                "debitAccount": true,
+                "unmaskableAttributes": [
+                    "BBAN"
+                ],
+                "bic": "USXBUSHQXXX",
+                "bban": "***************6945"
+            }
+        ]
+    },
+    "savingsAccounts": {
+        "name": "Savings Accounts",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": [
+            {
+                "id": "661be13a-9dfe-4205-85bf-c586047c9617",
+                "name": "Advantage Saving Account",
+                "displayName": "Advantage Saving Account",
+                "externalTransferAllowed": true,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Savings Account",
+                "productTypeName": "Savings Account",
+                "bankAlias": "Advantage Saving Account",
+                "visible": true,
+                "accountOpeningDate": "2024-05-08T19:44:36Z",
+                "lastUpdateDate": "2024-08-26T22:42:12Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "1459.9300000000",
+                "availableBalance": "1459.9300000000",
+                "accruedInterest": 4.26464,
+                "IBAN": "**************6008",
+                "BBAN": "*****************6008",
+                "BIC": "INGBNL2A",
+                "currency": "USD",
+                "bankBranchCode": "11103095",
+                "accountInterestRate": 4.00,
+                "accountHolderNames": "Sara Williams Williams",
+                "creditAccount": true,
+                "debitAccount": true,
+                "unmaskableAttributes": [
+                    "IBAN",
+                    "BBAN"
+                ],
+                "bic": "INGBNL2A",
+                "bban": "*****************6008",
+                "iban": "**************6008"
+            }
+        ]
+    },
+    "termDeposits": {
+        "name": "Term Deposits",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": [
+            {
+                "id": "d1e2f3a4-b5c6-7d8e-9f0a-b1c2d3e4f5a6",
+                "name": "Short-term Deposit",
+                "displayName": "6-Month Term Deposit",
+                "externalTransferAllowed": false,
+                "crossCurrencyAllowed": false,
+                "productKindName": "Term Deposit",
+                "productTypeName": "Fixed Term Deposit",
+                "bankAlias": "6-Month Term Deposit",
+                "visible": true,
+                "accountOpeningDate": "2024-09-01T00:00:00Z",
+                "lastUpdateDate": "2024-09-04T00:00:00Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "10000.0000000000",
+                "principalAmount": "10000.00000",
+                "currency": "USD",
+                "interestRate": 2.50,
+                "termUnit": "M",
+                "termNumber": 6,
+                "maturityDate": "2025-03-01T00:00:00Z",
+                "accountHolderNames": "Sara Williams",
+                "creditAccount": true,
+                "debitAccount": false,
+                "unmaskableAttributes": [
+                    "BBAN"
+                ],
+                "bban": "**************1234"
+            },
+            {
+                "id": "a7d068e8-5bfd-4a11-b326-099b3309f05d",
+                "name": "Long-term Deposit",
+                "displayName": "12-Month Term Deposit",
+                "externalTransferAllowed": false,
+                "crossCurrencyAllowed": false,
+                "productKindName": "Term Deposit",
+                "productTypeName": "Fixed Term Deposit",
+                "bankAlias": "12-Month Term Deposit",
+                "visible": true,
+                "accountOpeningDate": "2023-09-20T00:00:00Z",
+                "lastUpdateDate": "2023-09-20T00:00:00Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": true
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "20000.0000000000",
+                "principalAmount": "20000.00000",
+                "currency": "USD",
+                "interestRate": 3.00,
+                "termUnit": "M",
+                "termNumber": 12,
+                "maturityDate": "2024-09-20T00:00:00Z",
+                "accountHolderNames": "Sara Williams",
+                "creditAccount": true,
+                "debitAccount": false,
+                "unmaskableAttributes": [
+                    "BBAN"
+                ],
+                "bban": "**************5678"
+            }
+        ]
+    },
+    "loans": {
+        "name": "Loans",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": [
+            {
+                "id": "71f8690d-27cd-4b2c-bece-860c0e585c94",
+                "name": "Auto Loan",
+                "displayName": "Auto Loan",
+                "externalTransferAllowed": false,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Loan",
+                "productTypeName": "Term Loan",
+                "visible": true,
+                "accountOpeningDate": "2022-09-04T22:00:00Z",
+                "userPreferences": {
+                    "visible": true,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "14572.5800000000",
+                "principalAmount": 12000.00000,
+                "currency": "USD",
+                "urgentTransferAllowed": false,
+                "accountInterestRate": 4.80,
+                "termUnit": "M",
+                "termNumber": 60,
+                "outstandingPrincipalAmount": 11600.0000000000,
+                "interestSettlementAccount": "sdbxaz-stg-ARR000125",
+                "accountHolderNames": "Sara Williams",
+                "maturityDate": "2026-09-04T22:00:00Z",
+                "creditAccount": true,
+                "debitAccount": true,
+                "BBAN": "sdbxaz-stg-760906047009",
+                "unmaskableAttributes": [],
+                "bban": "sdbxaz-stg-760906047009"
+            },
+            {
+                "id": "a7d068e8-5bfd-4a11-b326-099b3309f05d",
+                "name": "Home Mortgage",
+                "displayName": "Home Mortgage",
+                "externalTransferAllowed": false,
+                "crossCurrencyAllowed": true,
+                "productKindName": "Loan",
+                "productTypeName": "Mortgage",
+                "visible": true,
+                "accountOpeningDate": "2013-09-08T22:00:00Z",
+                "userPreferences": {
+                    "visible": false,
+                    "favorite": false
+                },
+                "state": {
+                    "externalStateId": "Active",
+                    "state": "Active"
+                },
+                "bookedBalance": "1049845.2000000000",
+                "principalAmount": 582600.00000,
+                "currency": "USD",
+                "urgentTransferAllowed": true,
+                "accountInterestRate": 4.01,
+                "termUnit": "Y",
+                "termNumber": 20,
+                "outstandingPrincipalAmount": 582600.0000000000,
+                "interestSettlementAccount": "sdbxaz-stg-ARR000125",
+                "accountHolderNames": "Sara Williams",
+                "maturityDate": "2033-10-20T22:00:00Z",
+                "creditAccount": false,
+                "debitAccount": true,
+                "BBAN": "sdbxaz-stg-9639906824",
+                "unmaskableAttributes": [],
+                "bban": "sdbxaz-stg-9639906824"
+            }
+        ]
+    },
+    "creditCards": {
+        "name": "Credit Cards",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": []
+    },
+    "debitCards": {
+        "name": "Debit Cards",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": []
+    },
+    "investmentAccounts": {
+        "name": "Investment Accounts",
+        "aggregatedBalance": {},
+        "expectsChildren": false,
+        "products": []
+    },
+    "customProductKinds": [
+        {
+            "name": "Pocket Parent",
+            "id": 8,
+            "products": [
+                {
+                    "id": "3d54b15c-90db-4fc6-8d3f-73a5034e3421",
+                    "name": "Sara's Pocket Account",
+                    "displayName": "Sarah Connor account",
+                    "externalTransferAllowed": true,
+                    "crossCurrencyAllowed": true,
+                    "productKindName": "Pocket Parent",
+                    "productTypeName": "Pocket Parent",
+                    "visible": true,
+                    "userPreferences": {
+                        "alias": "Sarah Connor account",
+                        "visible": true,
+                        "favorite": false
+                    },
+                    "bookedBalance": "98.0000000000",
+                    "availableBalance": "98.0000000000",
+                    "BBAN": "sdbxaz-stg-sara-551_pocket",
+                    "currency": "USD",
+                    "accountInterestRate": 0.00,
+                    "debitCardsItems": [],
+                    "accountHolderCountry": "US",
+                    "termUnit": "Y",
+                    "creditAccount": true,
+                    "debitAccount": true,
+                    "unmaskableAttributes": [],
+                    "bban": "sdbxaz-stg-sara-551_pocket"
+                }
+            ],
+            "aggregatedBalance": {},
+            "expectsChildren": false
+        }
+    ]
+}

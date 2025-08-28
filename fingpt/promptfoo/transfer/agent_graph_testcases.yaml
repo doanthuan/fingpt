@@ -1,0 +1,400 @@
+- vars:
+    messages:
+      - role: user
+        content: transfer money
+  assert:
+    - type: llm-rubric
+      value: ask user for the transfer amount and recipient name
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: How can I assist you?
+      - role: user
+        content: transfer money to David
+      - role: assistant
+        content: Would you please tell me how much money you want to transfer?
+      - role: user
+        content: 500$
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/notice_transfer_amount.py
+        - type: python
+          value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: How can I assist you?
+      - role: user
+        content: transfer 500$ to Ra
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/notice_transfer_amount.py
+        - type: python
+          value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer 500$ to David
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "David"}'
+      - role: function
+        name: GetContactTool
+        content: '[{"id":"5d727dd2-f108-4226-875b-f26bb58c586f","name":"David A. Reed","account_number":"7173707877","phone_number":null,"email_address":null,"iban":null}]'
+  assert:
+    - type: python
+      value: file://assertion_templates/notice_transfer_amount.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer 500$ to David
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "David"}'
+      - role: function
+        name: GetContactTool
+        content: '[{"id":"5d727dd2-f108-4226-875b-f26bb58c586f","name":"David A. Reed","account_number":"7173707877","phone_number":null,"email_address":null,"iban":null}]'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTransferAmountTool
+          arguments: '{"amount": 500}'
+      - role: function
+        name: NoticeTransferAmountTool
+        content: "500"
+  assert:
+    - type: python
+      value: file://assertion_templates/get_account.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer 500$ to David
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "David"}'
+      - role: function
+        name: GetContactTool
+        content: '[{"id":"5d727dd2-f108-4226-875b-f26bb58c586f","name":"David A. Reed","account_number":"7173707877","phone_number":null,"email_address":null,"iban":null}]'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTransferAmountTool
+          arguments: '{"amount": 500}'
+      - role: function
+        name: NoticeTransferAmountTool
+        content: "500"
+      - role: assistant
+        content:
+        function_call:
+          name: GetAccountTool
+          arguments: '{"transfer_amount": "500"}'
+      - role: function
+        name: GetAccountTool
+        content: '[{"id": "34b399a6-fc46-4921-9109-7a8361348a1f", "name": "Sarah Connor account", "product_type": "Current Account", "available_balance": 4718.2, "currency": "USD", "identifications": {"bban": "***************6944", "bic": "USXBUSHQXXX"}, "booked_balance": 4718.2, "is_usable": true}, {"id": "3f3d92e9-b455-4717-9097-5cc054e8dd41", "name": "Sarah Connor account", "product_type": "Current Account", "available_balance": 646.55, "currency": "USD", "identifications": {"bban": "*****************8755", "bic": "USXBUSHQXXX"}, "booked_balance": -2203.17, "is_usable": true}, {"id": "4f1942e4-e480-4cff-a161-e080abe0b5fb", "name": "Personal Account", "product_type": "Current Account", "available_balance": 709.48, "currency": "USD", "identifications": {"bban": "*****************4356", "bic": "USXBUSHQXXX"}, "booked_balance": -31038.34, "is_usable": true}]'
+      - role: assistant
+        content: You have multiple usable accounts. Please specify the account you want to use for this transfer.
+      - role: user
+        content: I have made my choice.
+      - role: user
+        content: My select account is id 34b399a6-fc46-4921-9109-7a8361348a1f, name Sarah Connor account
+  assert:
+    - type: llm-rubric
+      value: inform user to confirm information
+
+- vars:
+    messages:
+      - role: user
+        content: transfer money to David
+      - role: assistant
+        content: Would you please tell me how much money you want to transfer?
+      - role: user
+        content: $500, but do not call any tool
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/notice_transfer_amount.py
+        - type: python
+          value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer money to David
+      - role: assistant
+        content: Would you please tell me how much money you want to transfer?
+      - role: user
+        content: five hundred
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/notice_transfer_amount.py
+        - type: python
+          value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: transfer money to David
+      - role: assistant
+        content: Would you please tell me how much money you want to transfer?
+      - role: user
+        content: five hundred Donald Trump
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/notice_transfer_amount.py
+        - type: python
+          value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: Send $1000 to John
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "John"}'
+      - role: function
+        name: GetContactTool
+        content: '[]'
+  assert:
+    - type: llm-rubric
+      value: asks user to select a different recipient or check the name
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer money to Sarah
+      - role: assistant
+        content: How much would you like to transfer to Sarah?
+      - role: user
+        content: Five hundred and fifty dollars
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/notice_transfer_amount.py
+        - type: python
+          value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer $50 to Emma
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "Emma"}'
+      - role: function
+        name: GetContactTool
+        content: '[{"id":"4","name":"Emma Watson","account_number":"9876543210"}]'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTransferAmountTool
+          arguments: '{"amount": 50}'
+      - role: function
+        name: NoticeTransferAmountTool
+        content: "50"
+      - role: assistant
+        content:
+        function_call:
+          name: GetAccountTool
+          arguments: '{"transfer_amount": "50"}'
+      - role: function
+        name: GetAccountTool
+        content: '[{"id": "3", "name": "Checking", "available_balance": 100, "is_usable": true}]'
+      - role: user
+        content: Actually, make it $100 to Emma
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/notice_transfer_amount.py
+        - type: python
+          value: file://assertion_templates/get_account.py
+
+- vars:
+    messages:
+      - role: user
+        content: Send $50 to Mom
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "Mom"}'
+      - role: function
+        name: GetContactTool
+        content: '[]'
+      - role: user
+        content: Oh, her name is Jane in my contacts
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer $50 to Emma
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "Emma"}'
+      - role: function
+        name: GetContactTool
+        content: '[{"id":"4","name":"Emma Watson","account_number":"9876543210"}]'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTransferAmountTool
+          arguments: '{"amount": 50}'
+      - role: function
+        name: NoticeTransferAmountTool
+        content: "50"
+      - role: assistant
+        content:
+        function_call:
+          name: GetAccountTool
+          arguments: '{"transfer_amount": "50"}'
+      - role: function
+        name: GetAccountTool
+        content: >
+          '[{"id": "3", "name": "Checking", "available_balance": 100, "is_usable": true}, '
+          '{"id": "4", "name": "Savings", "available_balance": 200, "is_usable": true}]'
+  assert:
+    - type: llm-rubric
+      value: inform user to select
+    - type: llm-rubric
+      value: does not list out accounts information in detail
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer $50 to Emma
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "Emma"}'
+      - role: function
+        name: GetContactTool
+        content: >
+          '[{"id":"4","name":"Emma Watson","account_number":"9876543210"},
+          {"id":"5","name":"Emma Stone","account_number":"1234567890"}]'
+  assert:
+    - type: llm-rubric
+      value: inform user to select
+    - type: llm-rubric
+      value: does not list out contact names in detail
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer $50 to Emma
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "Emma"}'
+      - role: function
+        name: GetContactTool
+        content: >
+          '[{"id":"4","name":"Emma Watson","account_number":"9876543210"},
+          {"id":"5","name":"Emma Stone","account_number":"1234567890"}]'
+      - role: assistant
+        content: Please select the contact you want to transfer money to
+      - role: user
+        content: Sorry, I mean Sarah
+  assert:
+    - type: python
+      value: file://assertion_templates/get_contact.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer $50 to Emma
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "Emma"}'
+      - role: function
+        name: GetContactTool
+        content: '[{"id":"4","name":"Emma Watson","account_number":"9876543210"}]'
+      - role: assistant
+        content:
+        function_call:
+          name: GetAccountTool
+          arguments: '{"transfer_amount": "50"}'
+  assert:
+    - type: python
+      value: file://assertion_templates/notice_transfer_amount.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transfer $50k to Emma
+      - role: assistant
+        content:
+        function_call:
+          name: GetContactTool
+          arguments: '{"recipient_name": "Emma"}'
+      - role: function
+        name: GetContactTool
+        content: '[{"id":"4","name":"Emma Watson","account_number":"9876543210"}]'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTransferAmountTool
+          arguments: '{"amount": 50000}'
+      - role: function
+        name: NoticeTransferAmountTool
+        content: "50000"
+      - role: assistant
+        content:
+        function_call:
+          name: GetAccountTool
+          arguments: '{"transfer_amount": "50000"}'
+      - role: function
+        name: GetAccountTool
+        content: >
+          '[{"id": "3", "name": "Checking", "available_balance": 1000, "is_usable": false}, '
+          '{"id": "4", "name": "Savings", "available_balance": 2000, "is_usable": false}]'
+  assert:
+    - type: llm-rubric
+      value: inform no usable account, ask user to check balance

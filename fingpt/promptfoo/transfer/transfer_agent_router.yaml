@@ -1,0 +1,31 @@
+description: 'Evaluate Money Transfer Agent Router'
+
+prompts:
+  - retail.money-transfer.azure-open-ai.money-transfer-agent:latest # latest, staging
+  # - retail.money-transfer.azure-open-ai.money-transfer-agent:test
+
+# These test properties are applied to every test
+defaultTest:
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot0
+
+    - type: not-contains
+      value: agent
+
+    - type: is-json
+
+providers:
+  - id: file://transfer_agent_runner.py:transfer_agent_router
+    label: gpt-4-32k-september
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4-32k-september
+
+  - id: file://transfer_agent_runner.py:transfer_agent_router
+    label: gpt-4o
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o
+
+tests: file://router_testcases.yaml

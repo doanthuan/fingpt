@@ -1,0 +1,8 @@
+define flow self check user query
+    $result = execute self_check_user_query
+
+    bot respond
+    stop
+
+define bot respond
+    "$result"

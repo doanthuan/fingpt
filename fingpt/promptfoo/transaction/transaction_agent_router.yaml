@@ -1,0 +1,30 @@
+description: 'Evaluate Transaction Agent Router'
+
+prompts:
+  - retail.transaction-report.azure-openai.agent-v2:latest # latest, staging
+
+# These test properties are applied to every test
+defaultTest:
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: is-json
+
+providers:
+  - id: file://transaction_agent_runner.py:transaction_agent_router
+    label: gpt-4-32k-september
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4-32k-september
+
+  - id: file://transaction_agent_runner.py:transaction_agent_router
+    label: gpt-4o
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o
+
+tests: file://router_testcases.yaml

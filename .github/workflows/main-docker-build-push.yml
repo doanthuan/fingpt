@@ -1,0 +1,61 @@
+name: Build FinGPT main
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'fingpt/**'
+      - '!fingpt/.version.json'
+      - '.github/workflows/main-docker-build-push.yml'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11.4'
+
+      - name: Determine Next Version
+        run: |
+          run python fingpt/version_increment.py fingpt/.version.json patch
+          NEW_VERSION=$(jq -r '.version' fingpt/.version.json)
+          echo "::set-output name=NEXT_VERSION::$NEW_VERSION"
+
+      - name: Build Docker Image
+        run: |
+          NEW_VERSION=${{ steps.determine_next_version.outputs.NEXT_VERSION }}
+          GIT_HASH=${{ github.sha }}
+          GIT_HASH=${GIT_HASH::8}
+          IMAGE_NAME="crsdbxaz755.azurecr.io/fin-gpt:$NEW_VERSION.$GIT_HASH"
+          docker build -t $IMAGE_NAME fingpt
+          echo "::set-output name=IMAGE_NAME::$IMAGE_NAME"
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: crsdbxaz755.azurecr.io
+          username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+          password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+
+      - name: Push Docker Image
+        run: |
+          IMAGE_NAME=${{ steps.build_docker_image.outputs.IMAGE_NAME }}
+          docker push $IMAGE_NAME
+
+      - name: Commit new version
+        run: |
+          NEW_VERSION=${{ steps.determine_next_version.outputs.NEXT_VERSION }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fingpt/.version.json
+          git commit -m "ci: Update fingpt version to $NEW_VERSION"
+          git push

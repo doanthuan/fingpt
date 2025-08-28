@@ -1,0 +1,125 @@
+testcases:
+  - name: Single recipient
+    steps:
+      - name: Extract info
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Transfer 500$ to David
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+      - name: Select account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[0].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: MAKE_TRANSFER
+            metadata:
+              type: TRANSFER_DATA
+              account:
+                id: "${steps[0].metadata.choices[0].id}"
+              transfer_amount: 500
+
+  - name: Multiple recipients
+    steps:
+      - name: Extract info
+        assert_method: llm_flexible
+        additional_assert_input:
+          input_material: I want to transfer $234 to Ra, if is asked, re-confirm the recipient name and amount.
+          max_reply: 3
+          final_assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Transfer 234$ to Ra
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+      - name: Select recipient
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[0].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+      - name: Select account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[1].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: MAKE_TRANSFER
+            metadata:
+              type: TRANSFER_DATA
+              account:
+                id: "${steps[1].metadata.choices[0].id}"
+              recipient:
+                id: "${steps[0].metadata.choices[0].id}"
+              transfer_amount: 234
+  - name: 2 steps input
+    steps:
+      - name: Extract name
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: Send money to David
+        output:
+          status: 200
+          response:
+            action: SHOW_REPLY
+      - name: Extract amount
+        assert_method: contains_keys
+        input:
+          action: QUERY
+          metadata:
+            type: QUERY_DATA
+            thread_id: random
+            user_query: 300$
+        output:
+          status: 200
+          response:
+            action: SHOW_CHOICES
+      - name: Select account
+        assert_method: contains_keys
+        input:
+          action: MAKE_CHOICE
+          metadata:
+            type: CHOICE_DATA
+            thread_id: random
+            choice_id: "${steps[1].metadata.choices[0].id}"
+        output:
+          status: 200
+          response:
+            action: MAKE_TRANSFER
+            metadata:
+              type: TRANSFER_DATA
+              account:
+                id: "${steps[1].metadata.choices[0].id}"
+              transfer_amount: 300

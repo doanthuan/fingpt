@@ -1,0 +1,128 @@
+description: 'Evaluate Term Deposit Agent Flow'
+
+prompts:
+  - retail.term-deposit.azure-open-ai.extract-user-query-4o:latest #staging, latest
+
+# These test properties are applied to every test
+defaultTest:
+  assert:
+    - type: llm-rubric
+      value: does not describe self as an AI, model, or chatbot
+
+    - type: not-contains
+      value: agent
+
+    - type: is-json
+
+providers:
+  - id: file://term_deposit_agent_runner.py:call_api
+    label: gpt-4
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4-32k-september
+
+  - id: file://term_deposit_agent_runner.py:call_api
+    label: gpt-4o
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o
+
+  - id: file://term_deposit_agent_runner.py:call_api
+    label: gpt-4o-mini
+    config:
+      apiBaseUrl: https://backbase-ai.openai.azure.com/
+      model: gpt-4o-mini
+
+tests:
+  - vars:
+      messages:
+        - role: user
+          content: make term deposit
+    assert:
+      - type: llm-rubric
+        value: ask user for the deposit amount
+  - vars:
+      messages:
+        - role: user
+          content: produce term deposit
+    assert:
+      - type: llm-rubric
+        value: ask user for the deposit amount
+  - vars:
+      messages:
+        - role: user
+          content: generate term deposit
+    assert:
+      - type: llm-rubric
+        value: ask user for the deposit amount
+  - vars:
+      messages:
+        - role: user
+          content: construct term deposit
+    assert:
+      - type: llm-rubric
+        value: ask user for the deposit amount
+
+
+assertionTemplates:
+  NoticeDepositAmountTool:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        tool_calls[0]['name'] == 'NoticeDepositAmountTool'
+        and "deposit_amount" in tool_calls[0]['args']
+        and tool_calls[0]['args']["deposit_amount"] > 0
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  NoticeTermNumberTool:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        tool_calls[0]['name'] == 'NoticeTermNumberTool'
+        and "term_number" in tool_calls[0]['args']
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  NoticeTermUnitTool:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        tool_calls[0]['name'] == 'NoticeTermUnitTool'
+        and "term_unit" in tool_calls[0]['args']
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  GetAccountTool:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        tool_calls[0]['name'] == 'GetAccountTool'
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  GetTermDepositAccountTool:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        len(tool_calls) == 1
+        and tool_calls[0]['name'] == 'GetTermDepositAccountTool'
+        and "deposit_amount" in tool_calls[0]['args']
+        and tool_calls[0]['type'] == 'tool_call'
+      )
+
+  GetTermDepositProductTool:
+    type: python
+    value: |
+      tool_calls = output["tool_calls"]
+      return (
+        len(tool_calls) == 1
+        and tool_calls[0]['name'] == 'GetTermDepositProductTool'
+        and "deposit_amount" in tool_calls[0]['args']
+        and tool_calls[0]['type'] == 'tool_call'
+      )

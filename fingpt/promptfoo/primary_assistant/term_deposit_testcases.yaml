@@ -1,0 +1,99 @@
+# TERM DEPOSIT AGENT
+
+- vars:
+    messages:
+      - role: user
+        content: Open new term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Renew my term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: How much money in my term deposit accounts?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: How many term deposit accounts do I have?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Show me my term deposit accounts
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Term deposit
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/to_term_deposit_agent.py
+        - type: llm-rubric
+          value: ask for clarification
+
+- vars:
+    messages:
+      - role: user
+        content: Put 100$ to term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: I want to open new term deposit account
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: When is my term deposit mature
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: deposit money
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/to_term_deposit_agent.py
+        - type: llm-rubric
+          value: ask for clarification
+
+- vars:
+    messages:
+      - role: user
+        content: deposit $10000
+  assert:
+    - type: python
+      value: file://assertion_templates/to_term_deposit_agent.py

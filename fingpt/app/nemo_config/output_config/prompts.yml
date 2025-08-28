@@ -1,0 +1,4 @@
+prompts:
+  - task: self_check_bot_response
+    content: |
+SELF_CHECK_BOT_RESPONSE

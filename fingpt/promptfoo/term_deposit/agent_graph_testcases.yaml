@@ -1,0 +1,231 @@
+# New term deposit - Basic Flow
+- vars:
+    messages:
+      - role: user
+        content: new term deposit
+  assert:
+    - type: llm-rubric
+      value: ask user for the deposit amount
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: How can I assist you?
+      - role: user
+        content: open new term deposit
+      - role: assistant
+        content: How much do you want to deposit?
+      - role: user
+        content: 10000$
+  assert:
+    - type: python
+      value: file://assertion_templates/notice_deposit_amount.py
+
+# New term deposit with amount in initial request
+- vars:
+    messages:
+      - role: user
+        content: create a 5000$ term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/notice_deposit_amount.py
+
+# New term deposit with term details
+- vars:
+    messages:
+      - role: user
+        content: create a 5000$ term deposit for 6 months
+  assert:
+    - type: python
+      value: file://assertion_templates/notice_deposit_amount.py
+    - type: llm-rubric
+      value: should only call NoticeDepositAmountTool and wait for tool response
+
+- vars:
+    messages:
+      - role: user
+        content: create a 5000$ term deposit for 6 months
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeDepositAmountTool
+          arguments: '{"deposit_amount": 5000}'
+      - role: function
+        name: NoticeDepositAmountTool
+        content: '5000'
+  assert:
+    - type: python
+      value: |
+        tool_calls = output["tool_calls"]
+        # Check only one tool call is made
+        if len(tool_calls) != 1:
+            return False
+        # Check it's either NoticeTermNumberTool or NoticeTermUnitTool
+        valid_tools = {'NoticeTermNumberTool', 'NoticeTermUnitTool'}
+        return tool_calls[0]['name'] in valid_tools
+
+    - type: llm-rubric
+      value: should only call either NoticeTermNumberTool or NoticeTermUnitTool and wait for response
+
+- vars:
+    messages:
+      - role: user
+        content: create a 5000$ term deposit for 6 months
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeDepositAmountTool
+          arguments: '{"deposit_amount": 5000}'
+      - role: function
+        name: NoticeDepositAmountTool
+        content: '5000'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTermNumberTool
+          arguments: '{"term_number": 6}'
+      - role: function
+        name: NoticeTermNumberTool
+        content: '6'
+  assert:
+    - type: python
+      value: file://assertion_templates/notice_term_unit.py
+    - type: llm-rubric
+      value: should only call NoticeTermUnitTool and wait for response
+
+- vars:
+    messages:
+      - role: user
+        content: create a 5000$ term deposit for 6 months
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeDepositAmountTool
+          arguments: '{"deposit_amount": 5000}'
+      - role: function
+        name: NoticeDepositAmountTool
+        content: '5000'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTermNumberTool
+          arguments: '{"term_number": 6}'
+      - role: function
+        name: NoticeTermNumberTool
+        content: '6'
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeTermUnitTool
+          arguments: '{"term_unit": "M"}'
+      - role: function
+        name: NoticeTermUnitTool
+        content: 'M'
+  assert:
+    - type: python
+      value: file://assertion_templates/get_account.py
+
+# New term deposit with invalid amount
+- vars:
+    messages:
+      - role: user
+        content: create a -1000$ term deposit
+  assert:
+    - type: llm-rubric
+      value: inform user that deposit amount must be positive
+
+# Renewal Flow - Basic
+- vars:
+    messages:
+      - role: user
+        content: renew my term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/get_term_deposit_account.py
+
+# Renewal Flow - With Specific Account
+- vars:
+    messages:
+      - role: user
+        content: renew my term deposit
+      - role: assistant
+        content:
+        function_call:
+          name: GetTermDepositAccountTool
+          arguments: '{"deposit_amount": ""}'
+      - role: function
+        name: GetTermDepositAccountTool
+        content: '[{"id": "d1e2f3a4-b5c6-7d8e-9f0a-b1c2d3e4f5a6", "name": "Short-term Deposit", "interest_rate": 2.5, "term_number": 6, "term_unit": "M", "maturity_date": "2025-03-01T00:00:00Z", "start_date": "", "bban": "**************1234", "deposit_amount": 10000.0, "maturity_earn": 0.0, "is_renewable": false, "is_mature": false}, {"id": "a7d068e8-5bfd-4a11-b326-099b3309f05d", "name": "Long-term Deposit", "interest_rate": 3.0, "term_number": 12, "term_unit": "M", "maturity_date": "2024-09-20T00:00:00Z", "start_date": "", "bban": "**************5678", "deposit_amount": 20000.0, "maturity_earn": 0.0, "is_renewable": true, "is_mature": true}]'
+      - role: assistant
+        content: You have a term deposit account that is mature and renewable. Please specify the term deposit account you want to renew.
+      - role: user
+        content: Selected term deposit account Long-term Deposit with deposit amount is 20000.0$
+  assert:
+    - type: python
+      value: |
+        tool_calls = output["tool_calls"]
+        # Check only one tool call is made
+        if len(tool_calls) != 1:
+            return False
+        # Check it's either GetTermDepositProductTool or NoticeDepositAmountTool
+        valid_tools = {'NoticeDepositAmountTool', 'GetTermDepositProductTool'}
+        return tool_calls[0]['name'] in valid_tools
+
+    - type: llm-rubric
+      value: should only call either GetTermDepositProductTool or NoticeDepositAmountTool and wait for response
+
+# Renewal Flow - No Eligible Accounts
+- vars:
+    messages:
+      - role: user
+        content: renew my term deposit
+      - role: assistant
+        content:
+        function_call:
+          name: GetTermDepositAccountTool
+          arguments: '{"deposit_amount": ""}'
+      - role: function
+        name: GetTermDepositAccountTool
+        content: '[{"id": "d1e2f3a4-b5c6-7d8e-9f0a-b1c2d3e4f5a6", "name": "Short-term Deposit", "interest_rate": 2.5, "term_number": 6, "term_unit": "M", "maturity_date": "2025-03-01T00:00:00Z", "start_date": "", "bban": "**************1234", "deposit_amount": 10000.0, "maturity_earn": 0.0, "is_renewable": false, "is_mature": false}]'
+  assert:
+    - type: llm-rubric
+      value: inform user no eligible accounts for renewal
+
+# Change Request - Amount
+- vars:
+    messages:
+      - role: user
+        content: create a 5000$ term deposit
+      - role: assistant
+        content:
+        function_call:
+          name: NoticeDepositAmountTool
+          arguments: '{"deposit_amount": 5000}'
+      - role: user
+        content: actually, I want to change the amount to 8000$
+  assert:
+    - type: python
+      value: file://assertion_templates/notice_deposit_amount.py
+    - type: python
+      value: |
+        tool_calls = output["tool_calls"]
+        return tool_calls[0]['args']["deposit_amount"] == 8000
+
+# Unsupported Action
+- vars:
+    messages:
+      - role: user
+        content: close my term deposit
+  assert:
+    - type: llm-rubric
+      value: inform user that only create and renew operations are supported
+
+- vars:
+    messages:
+      - role: user
+        content: How many term deposit I have?
+  assert:
+    - type: llm-rubric
+      value: inform user that only create and renew operations are supported and not tool call

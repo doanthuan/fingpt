@@ -1,0 +1,104 @@
+# FINANCIAL REPORT
+- vars:
+    messages:
+      - role: user
+        content: Can you help me generate financial report for Apple?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_ticker_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Generate financial report for google
+  assert:
+    - type: python
+      value: file://assertion_templates/to_ticker_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Are there any significant changes in the tesla's equity position?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_ticker_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: How is Microsoft doing lately?
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/to_ticker_agent.py
+        - type: llm-rubric
+          value: ask for financial report or Microsoft
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me Apple.
+  assert:
+    - type: llm-rubric
+      value: ask for financial report or Apple
+
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me the finance report for Apple
+  assert:
+    - type: python
+      value: file://assertion_templates/to_ticker_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Show me Apple stock report
+  assert:
+    - type: python
+      value: file://assertion_templates/to_ticker_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: How is Tesla stock performance?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_ticker_agent.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: Hello! How can I assist you with your banking needs today?
+      - role: user
+        content: Show me the finance report for Apple
+      - role: assistant
+        content: Here is the report of Apple
+      - role: user
+        content: How is Tesla stock performance?
+      - role: assistant
+        content: Here is the report of Tesla
+      - role: user
+        content: Show me Amazon stock report
+      - role: assistant
+        content: Here is the Amazon stock report
+  assert:
+    - type: python
+      value: file://assertion_templates/to_ticker_agent.py

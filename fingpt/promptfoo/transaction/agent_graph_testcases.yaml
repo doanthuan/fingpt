@@ -1,0 +1,139 @@
+## Test calling FilterTransactionTool
+- vars:
+    messages:
+      - role: user
+        content: uber transaction
+  assert:
+    - type: assert-set
+      threshold: 0.5
+      assert:
+        - type: python
+          value: file://assertion_templates/filter_transaction.py
+        - type: llm-rubric
+          value: ask for clarify that the user wants to see the transaction report related to Uber
+
+- vars:
+    messages:
+      - role: user
+        content: uber transaction
+      - role: assistant
+        content: Please confirm if you would like to retrieve transactions specifically for Uber."
+      - role: user
+        content: Yes, it is.
+  assert:
+    - type: python
+      value: file://assertion_templates/filter_transaction.py
+
+- vars:
+    messages:
+      - role: user
+        content: Hi
+      - role: assistant
+        content: How can I assist you?
+      - role: user
+        content: Uber transaction report
+
+  assert:
+    - type: python
+      value: file://assertion_templates/filter_transaction.py
+
+## Test full process
+- vars:
+    messages:
+      - role: user
+        content: show me uber transaction
+      - role: assistant
+        content:
+        function_call:
+          name: FilterTransactionTool
+          arguments: '{"search_term: "uber"}'
+      - role: function
+        name: FilterTransactionTool
+        content: '{"123456789-Amazon Prime-Uber": [{"account_id": "4f1942e4-e480-4cff-a161-e080abe0b5fb", "execution_date": "2024-08-21", "transaction_type": "Deposit", "amount": 17.0, "currency": "USD", "counterparty_name": "Amazon Prime-Uber", "counterparty_account": "123456789"}], "123456789-Uber": [{"account_id": "b282e899-5645-4f1d-91ed-1e570294a090", "execution_date": "2024-08-31", "transaction_type": "Deposit", "amount": 0.04, "currency": "USD", "counterparty_name": "Uber", "counterparty_account": "123456789"}], "123456789-Uniqlo-Uber": [{"account_id": "b8016682-ca55-48d3-85e4-a81c66cf3462", "execution_date": "2024-09-30", "transaction_type": "Deposit", "amount": 17.66, "currency": "USD", "counterparty_name": "Uniqlo-Uber", "counterparty_account": "123456789"}]}'
+      - role: assistant
+        content: I found multiple beneficiaries with the term "Uber". They are "Amazon Prime-Uber", "Uber", and "Uniqlo-Uber". Could you please specify which one you are referring to?
+      - role: user
+        content: I have made my choice.
+      - role: user
+        content: My selected beneficiary is Amazon Prime-Uber.
+  assert:
+    - type: llm-rubric
+      value: indicates transactions related to Uber and the answer does not contain any follow-up question
+
+- vars:
+    messages:
+      - role: user
+        content: show me David transaction
+      - role: assistant
+        content:
+        function_call:
+          name: FilterTransactionTool
+          arguments: '{"search_term: "David"}'
+      - role: function
+        name: FilterTransactionTool
+        content: '{"123456789-David": [{"account_id": "4f1942e4-e480-4cff-a161-e080abe0b5fb", "execution_date": "2024-08-21", "transaction_type": "Deposit", "amount": 17.0, "currency": "USD", "counterparty_name": "123456789-David", "counterparty_account": "123456789"}]}'
+  assert:
+    - type: llm-rubric
+      value: indicates transactions related to David and the answer does not contain any follow-up question
+
+- vars:
+    messages:
+      - role: user
+        content: show me uber transaction
+      - role: assistant
+        content:
+        function_call:
+          name: FilterTransactionTool
+          arguments: '{"search_term: "uber"}'
+      - role: function
+        name: FilterTransactionTool
+        content: '{"123456789-Amazon Prime-Uber": [{"account_id": "4f1942e4-e480-4cff-a161-e080abe0b5fb", "execution_date": "2024-08-21", "transaction_type": "Deposit", "amount": 17.0, "currency": "USD", "counterparty_name": "Amazon Prime-Uber", "counterparty_account": "123456789"}]}'
+  assert:
+    - type: llm-rubric
+      value: indicates transactions related to Uber and the answer does not contain any follow-up question
+
+## Test with term has no data found
+- vars:
+    messages:
+      - role: user
+        content: show me uber transaction
+      - role: assistant
+        content:
+        function_call:
+          name: FilterTransactionTool
+          arguments: '{"search_term: "uber"}'
+      - role: function
+        name: FilterTransactionTool
+        content: '{}'
+  assert:
+    - type: llm-rubric
+      value: answer that there is no data, ask user to provide another report entity
+
+- vars:
+    messages:
+      - role: user
+        content: show me my transaction with Starbucks
+  assert:
+    - type: python
+      value: file://assertion_templates/filter_transaction.py
+
+- vars:
+    messages:
+      - role: user
+        content: Can I have beneficiary transaction history
+      - role: assistant
+        content: Could you please clarify if you would like to see your transaction history with a specific beneficiary or if you are looking for something else?
+      - role: user
+        content: David
+  assert:
+    - type: python
+      value: file://assertion_templates/filter_transaction.py
+
+## Test inappropriate languages
+- vars:
+    messages:
+      - role: user
+        content: Stupid Biden transactions report
+  assert:
+    - type: llm-rubric
+      value: say that the input is against the policies

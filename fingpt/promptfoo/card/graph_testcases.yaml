@@ -1,0 +1,64 @@
+- vars:
+    messages:
+      - role: user
+        content: Renew my cards
+  assert:
+    - type: python
+      value: file://assertion_templates/get_renewable_card_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I want to renew my cards that expire in 4 years
+  assert:
+    - type: python
+      value: file://assertion_templates/get_renewable_card_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Renew my cards
+      - role: assistant
+        content:
+        function_call:
+          name: GetRenewableCardTool
+          arguments: '{"expired_day": 30}'
+      - role: function
+        name: GetRenewableCardTool
+        content: ''
+  assert:
+    - type: llm-rubric
+      value: inform user that couldn't find any renewable cards from user profile
+
+- vars:
+    messages:
+      - role: user
+        content: I want to renew my cards that expire in 5 years
+      - role: assistant
+        content:
+        function_call:
+          name: GetRenewableCardTool
+          arguments: '{"expired_day": 1825}'
+      - role: function
+        name: GetRenewableCardTool
+        content: '[{"id": "2b258902-7f94-4521-b8d0-a600fd4833de", "brand": "mastercard", "card_type": "Debit", "status": "Active", "lock_status": "LOCKED", "replacement_status": "NotUnderReplacement", "holder_name": "Sara Williams", "currency": "USD", "expiry_date": "2028-10-31"}, {"id": "c854d47a-b35e-4fb2-8099-4e2d256439ea", "brand": "mastercard", "card_type": "Debit", "status": "Cancelled", "lock_status": "UNLOCKED", "replacement_status": "Replaced", "holder_name": "Sara Williams", "currency": "USD", "expiry_date": "2028-10-31"}]'
+  assert:
+    - type: llm-rubric
+      value: ask user to choose a card
+
+# General about card
+- vars:
+    messages:
+      - role: user
+        content: How many cards do I have
+  assert:
+    - type: python
+      value: file://assertion_templates/get_card_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Do I have any debit cards
+  assert:
+    - type: python
+      value: file://assertion_templates/get_card_tool.py

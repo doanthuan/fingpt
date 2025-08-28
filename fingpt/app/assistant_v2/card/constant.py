@@ -1,0 +1,4 @@
+MESSAGE_CONTENT = "content"
+
+GET_CARD_TOOL_NAME = "GetCardTool"
+GET_RENEWABLE_CARD_TOOL_NAME = "GetRenewableCardTool"

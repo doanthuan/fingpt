@@ -1,0 +1,102 @@
+- vars:
+    messages:
+      - role: user
+        content: How many cards do I have
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_flow_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Renew my cards
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_flow_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Do I have any debit cards
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_flow_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I want to renew my cards that expire in 4 years
+  assert:
+    - type: python
+      value: file://assertion_templates/to_card_flow_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Please review your card
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I want to send $300 to John
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I had all the information I need
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: How is Apple doing lately?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Should I buy more Microsoft shares?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Show me my recent transactions with Uber
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+- vars:
+    messages:
+      - role: user
+        content: I want to open a new term-deposit account
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Elon Musk is stupid!
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: The full report has been generated for AAPL
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py

@@ -1,0 +1,135 @@
+- vars:
+    messages:
+      - role: user
+        content: Show me my transaction with David
+  assert:
+    - type: python
+      value: file://assertion_templates/to_report_generator.py
+
+- vars:
+    messages:
+      - role: user
+        content: How much have I spent on Uber lately
+  assert:
+    - type: python
+      value: file://assertion_templates/to_report_generator.py
+
+- vars:
+    messages:
+      - role: user
+        content: How many times have I eaten outside this week
+  assert:
+    - type: python
+      value: file://assertion_templates/to_report_generator.py
+
+- vars:
+    messages:
+      - role: user
+        content: uber transaction
+  assert:
+    - type: python
+      value: file://assertion_templates/to_report_generator.py
+
+- vars:
+    messages:
+      - role: user
+        content: show me graph illustrating my transaction activity
+  assert:
+    - type: python
+      value: file://assertion_templates/to_report_generator.py
+
+- vars:
+    messages:
+      - role: user
+        content: show me Apple transaction report
+  assert:
+    - type: python
+      value: file://assertion_templates/to_report_generator.py
+
+- vars:
+    messages:
+      - role: user
+        content: Show me my transaction analysis that is completed
+  assert:
+    - type: python
+      value: file://assertion_templates/to_report_generator.py
+
+- vars:
+    messages:
+      - role: user
+        content: How many times I have to eat for a week
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Please review your term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I want to send $300 to John
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: I had all the information I need
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: How is Apple doing lately?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Should I buy more Microsoft shares?
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: open term deposit
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: My card is about to expire and I'd like to renew
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Elon Musk is stupid!
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
+
+- vars:
+    messages:
+      - role: user
+        content: Transaction analysis is completed
+  assert:
+    - type: python
+      value: file://assertion_templates/to_escalate_tool.py
